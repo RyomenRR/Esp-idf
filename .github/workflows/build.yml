@@ -1,27 +1,22 @@
-name: Build RainMaker Relay
+name: Build 4CH Relay RainMaker
 
 on: [push, pull_request]
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: ESP-IDF RainMaker build (official example)
+      - name: Build with ESP-IDF
         uses: espressif/esp-idf-ci-action@v1
         with:
-          esp_idf_version: v5.3.1
+          esp_idf_version: v5.3
           target: esp32
-          command: >-
-            idf.py set-target esp32 &&
-            idf.py fullclean &&
-            idf.py build
+          command: idf.py build
 
       - name: Upload firmware
         uses: actions/upload-artifact@v4
         with:
-          name: firmware
+          name: 4CH-Relay-Firmware
           path: build/*.bin
