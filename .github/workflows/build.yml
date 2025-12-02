@@ -1,0 +1,34 @@
+name: Build my ESP32 RainMaker
+
+# When do we run this?
+on:
+  push:                # Every time you push code
+  pull_request:        # Every time you make a pull request
+
+jobs:
+  build-esp32:
+    runs-on: ubuntu-latest     # GitHub gives us a free Linux computer
+
+    # Use the official Espressif Docker image (it has ESP-IDF already installed)
+    container:
+      image: espressif/idf:release-v5.3   # This is like a ready-made ESP-IDF computer
+
+    steps:
+      # Step 1: Download your code
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Step 2: Build the project (the magic happens here)
+      - name: Build with ESP-IDF
+        run: |
+          # These two lines are like opening the terminal and typing the usual commands
+          . $IDF_PATH/export.sh
+          idf.py set-target esp32
+          idf.py build
+
+      # Step 3: Save the .bin files so you can download them
+      - name: Upload firmware
+        uses: actions/upload-artifact@v4
+        with:
+          name: My-ESP32-Firmware
+          path: build/*.bin

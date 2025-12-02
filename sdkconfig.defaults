@@ -1,0 +1,3 @@
+CONFIG_ESP_RMAKER_ENABLE=y
+CONFIG_ESP_RMAKER_OTA_ENABLE=y
+# Add other RainMaker options you need
