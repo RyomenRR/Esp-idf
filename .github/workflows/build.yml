@@ -13,7 +13,9 @@ jobs:
         with:
           esp_idf_version: v5.3
           target: esp32
-          command: idf.py build
+          command: |
+            idf.py reconfigure  # ← THIS LINE DOWNLOADS esp_rmaker from idf_component.yml!
+            idf.py build
 
       - name: Upload firmware
         uses: actions/upload-artifact@v4
