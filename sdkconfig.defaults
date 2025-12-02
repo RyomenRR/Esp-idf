@@ -1,3 +1,12 @@
+# Enable RainMaker
 CONFIG_ESP_RMAKER_ENABLE=y
+
+# Enable Wi-Fi SoftAP + BLE provisioning (so phone app can connect easily)
+CONFIG_ESP_RMAKER_PROV_TRANSPORT_SOFTAP=y
+CONFIG_ESP_RMAKER_PROV_TRANSPORT_BLE=y
+
+# Enable OTA updates from RainMaker cloud
 CONFIG_ESP_RMAKER_OTA_ENABLE=y
-# Add other RainMaker options you need
+
+# Bigger task stack (recommended)
+CONFIG_ESP_RMAKER_TASK_STACK=8192
