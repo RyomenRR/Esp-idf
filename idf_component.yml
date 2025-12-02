@@ -1,0 +1,2 @@
+dependencies:
+  espressif/esp_rmaker: "^2.8.0"  # Latest stable for IDF v5.3
