@@ -1,34 +1,38 @@
-name: Build my ESP32 RainMaker
+name: Build ESP32 RainMaker 4-Channel Relay
 
-# When do we run this?
 on:
-  push:                # Every time you push code
-  pull_request:        # Every time you make a pull request
+  push:
+  pull_request:
 
 jobs:
-  build-esp32:
-    runs-on: ubuntu-latest     # GitHub gives us a free Linux computer
-
-    # Use the official Espressif Docker image (it has ESP-IDF already installed)
+  build:
+    runs-on: ubuntu-latest
     container:
-      image: espressif/idf:release-v5.3   # This is like a ready-made ESP-IDF computer
+      image: espressif/idf:release-v5.3
 
     steps:
-      # Step 1: Download your code
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          submodules: recursive
 
-      # Step 2: Build the project (the magic happens here)
-      - name: Build with ESP-IDF
+      - name: Install IDF Component Manager
         run: |
-          # These two lines are like opening the terminal and typing the usual commands
+          python -m pip install --upgrade pip
+          pip install idf-component-manager
+
+      - name: Build Project
+        run: |
           . $IDF_PATH/export.sh
           idf.py set-target esp32
+          idf.py reconfigure    # ← This automatically downloads esp_rmaker
           idf.py build
 
-      # Step 3: Save the .bin files so you can download them
-      - name: Upload firmware
+      - name: Upload Firmware
         uses: actions/upload-artifact@v4
         with:
-          name: My-ESP32-Firmware
-          path: build/*.bin
+          name: ESP32-4CH-Relay-Firmware
+          path: |
+            build/*.bin
+            build/flash_args
+          retention-days: 30

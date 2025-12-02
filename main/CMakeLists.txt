@@ -1,3 +1,3 @@
 idf_component_register(SRCS "app_main.c"
                        INCLUDE_DIRS "."
-                       REQUIRES esp_rmaker nvs_flash)
+                       REQUIRES nvs_flash esp_rmaker)
